@@ -19,14 +19,17 @@
   
   (define-record point coords)
 
+  ;; creates a new point using the given list as the coordinates
   (define (point-create lis)
     (assert (and (list? lis) (not (null? lis))))
     (make-point lis))
 
+  ;; retrieves the value of a given dimension
   (define (point-coord point dim)
     (assert (and (point? point) (>= dim 0)))
     (nth (point-coords point) dim))
 
+  ;; creates a new point with the new value for a given dimension
   (define (point-coord-set point dim val)
     (assert (and (point? point) (>= dim 0) (number? val)))
     (point-create (nth-set (point-coords point) dim val))))
