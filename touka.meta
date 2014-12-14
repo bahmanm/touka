@@ -1,0 +1,7 @@
+((synopsis "A geometric library implemented in Chicken Scheme")
+ (author "Bahman Movaqar <Bahman@BahmanM.com>")
+ (category data)
+ (license "Apache License, version 2.0")
+ (depends)
+ (test-depends "test")
+ (foreign-depends))

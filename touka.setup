@@ -1,0 +1,8 @@
+(compile -d0 -O2 -J -s touka.scm)
+(compile -d0 -O2 -s touka.import.scm)
+(compile -d0 -O2 -s misc.scm)
+
+(install-extension
+ 'touka
+ '("touka.so" "touka.import.so" "misc.scm")
+ '((version "0.0.1")))
