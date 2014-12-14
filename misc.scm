@@ -1,10 +1,14 @@
 (use srfi-1)
 
 (module misc
-  (nth-value-set)
+  (nth-set nth)
 
-  (import scheme srfi-1 r4rs r5rs chicken)
+  (import scheme chicken)
+  (use srfi-1)
 
-  (define (nth-value-set lis n val)
+  (define (nth-set lis n val)
     (let-values (((hd tl) (split-at lis n)))
-      (append hd (list val) (cdr tl)))))
+      (append hd (list val) (cdr tl))))
+  
+  (define nth list-ref))
+
