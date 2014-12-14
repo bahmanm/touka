@@ -3,8 +3,11 @@
 (compile -d0 -O2 -J -s misc.scm)
 (compile -d0 -O2 -s misc.import.scm)
 (compile -d0 -O2 -J -s point.scm)
+(compile -d0 -O2 -s point.import.scm)
 
 (install-extension
  'touka
- '("touka.so" "touka.import.so" "misc.so" "point.so")
+ '("touka.so" "touka.import.so"
+   "misc.so" "misc.import.so"
+   "point.so" "point.import.so")
  '((version "0.0.1")))
