@@ -12,6 +12,7 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
+;; Represents a point in an n-dimensional metric space.
 (module point
   (point-create point? point-coords point-coord point-coord-set point-distance
    point-abs-distance point-move)
