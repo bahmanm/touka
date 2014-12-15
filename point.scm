@@ -13,7 +13,7 @@
 ; limitations under the License.
 
 (module point
-  (point-create point? point-coords point-coord point-coord-set)
+  (point-create point? point-coords point-coord point-coord-set point-distance)
   (import scheme chicken)
   (use srfi-1 srfi-99 misc)
   
@@ -35,4 +35,11 @@
   ;; creates a new point with the new value for a given dimension
   (define (point-coord-set point dim val)
     (assert (and (point? point) (>= dim 0) (number? val)))
-    (point-create (nth-set (point-coords point) dim val))))
+    (point-create (nth-set (point-coords point) dim val)))
+
+  ;; calculates the distance from point1 to point2; if the number of dimensions
+  ;; of the given points is not equal, uses the smaller dimension.
+  (define (point-distance point1 point2)
+    (assert (and (point? point1) (point? point2)))
+    (point-create (map (lambda (c) (- (first c) (second c)))
+                       (zip (point-coords point1) (point-coords point2))))))

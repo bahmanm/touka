@@ -50,4 +50,16 @@
     (test p4 (point-coord-set p3 0 2))
     (test-error (point-coord-set 10 0 2))
     (test-error (point-coord-set p1 -1 0))
-    (test-error (point-coord-set p1 0 (list 100 200))))))
+    (test-error (point-coord-set p1 0 (list 100 200)))))
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "distance"
+  (let ((p1 (point-create (list 10 20)))
+        (p2 (point-create (list 8 25)))
+        (p3 (point-create (list 2 -5)))
+        (p4 (point-create (list 17)))
+        (p5 (point-create (list -7))))
+    (test p3 (point-distance p1 p2))
+    (test p5 (point-distance p1 p4))
+    (test-error (point-distance 10 5))
+    (test-error (point-distance p1 5)))))
