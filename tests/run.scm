@@ -23,4 +23,8 @@
 (import point)
 (include "point-tests")
 
+(load "../region")
+(import region)
+(include "region-tests")
+
 (test-exit)
