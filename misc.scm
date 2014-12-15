@@ -13,14 +13,23 @@
 ; limitations under the License.
 
 (module misc
-  (nth-set nth)
+  (nth-set nth zip-apply)
 
   (import scheme chicken)
   (use srfi-1)
 
+  ;; Returns a new list which is a copy of the given list with its nth element
+  ;; having the given value.
   (define (nth-set lis n val)
     (let-values (((hd tl) (split-at lis n)))
       (append hd (list val) (cdr tl))))
-  
-  (define nth list-ref))
+
+  ;; Returns the nth element of a given list.
+  (define nth list-ref)
+
+  ;; Applies a given procedure to the elements of the given lists grouped by
+  ;; index (zipped). The given procedure should expect two arguments.
+  (define (zip-apply f lis1 lis2)
+    (assert (and (list? lis1) (list? lis2)))
+    (map (lambda (l) (f (first l) (second l))) (zip lis1 lis2))))
 

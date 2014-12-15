@@ -13,7 +13,8 @@
 ; limitations under the License.
 
 (module point
-  (point-create point? point-coords point-coord point-coord-set point-distance)
+  (point-create point? point-coords point-coord point-coord-set point-distance
+   point-abs-distance)
   (import scheme chicken)
   (use srfi-1 srfi-99 misc)
   
@@ -22,24 +23,30 @@
   (define point-coords (rtd-accessor point #:coords))
   (define point? (rtd-predicate point))
 
-  ;; creates a new point using the given list as the coordinates
+  ;; Creates a new point using the given list as the coordinates.
   (define (point-create lis)
     (assert (and (list? lis) (not (null? lis))))
     (make-point lis))
 
-  ;; retrieves the value of a given dimension
+  ;; Retrieves the value of a given dimension.
   (define (point-coord point dim)
     (assert (and (point? point) (>= dim 0)))
     (nth (point-coords point) dim))
 
-  ;; creates a new point with the new value for a given dimension
+  ;; Creates a new point with the new value for a given dimension.
   (define (point-coord-set point dim val)
     (assert (and (point? point) (>= dim 0) (number? val)))
     (point-create (nth-set (point-coords point) dim val)))
 
-  ;; calculates the distance from point1 to point2; if the number of dimensions
+  ;; Calculates the distance from point1 to point2; if the number of dimensions
   ;; of the given points is not equal, uses the smaller dimension.
   (define (point-distance point1 point2)
     (assert (and (point? point1) (point? point2)))
-    (point-create (map (lambda (c) (- (first c) (second c)))
-                       (zip (point-coords point1) (point-coords point2))))))
+    (point-create (zip-apply -
+                             (point-coords point1) (point-coords point2))))
+
+  ;; Calculates the absolute distance between the given points.
+  (define (point-abs-distance point1 point2)
+    (assert (and (point? point1) (point? point2)))
+    (point-create (zip-apply (lambda (x y) (abs (- x y)))
+                             (point-coords point1) (point-coords point2)))))
