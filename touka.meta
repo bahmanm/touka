@@ -1,4 +1,4 @@
-((synopsis "A geometric library implemented in Chicken Scheme")
+((synopsis "A geometric library implemented in CHICKEN Scheme")
  (author "Bahman Movaqar <Bahman@BahmanM.com>")
  (category data)
  (license "Apache License, version 2.0")
