@@ -15,9 +15,12 @@
 (module point
   (point-create point? point-coords point-coord point-coord-set)
   (import scheme chicken)
-  (use srfi-1 misc)
+  (use srfi-1 srfi-99 misc)
   
-  (define-record point coords)
+  (define point (make-rtd #:point #(#:coords)))
+  (define make-point (rtd-constructor point))
+  (define point-coords (rtd-accessor point #:coords))
+  (define point? (rtd-predicate point))
 
   ;; creates a new point using the given list as the coordinates
   (define (point-create lis)
