@@ -12,7 +12,10 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
-;; Represents a hyper region in an n-dimensional space.
+;; Represents a rectangular region in a metric space. A rectangular region is
+;; marked by a "corner" and the "extent". The corner stands for the lowest
+;; coordinates of the region while the extent denotes how far in each dimension
+;; the region extends starting from the corner.
 (module region
   (region-create region? region-corner region-extent)
   (import scheme chicken)
