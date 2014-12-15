@@ -74,4 +74,16 @@
     (test p3 (point-abs-distance p1 p2))
     (test p5 (point-abs-distance p1 p4))
     (test-error (point-abs-distance 10 5))
+    (test-error (point-abs-distance p1 5))))
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "point-move"
+  (let ((p1 (point-create (list 10 20)))
+        (p2 (point-create (list 8 25)))
+        (p3 (point-create (list 18 45)))
+        (p4 (point-create (list -1)))
+        (p5 (point-create (list 9))))
+    (test p3 (point-move p1 p2))
+    (test p5 (point-move p1 p4))
+    (test-error (point-abs-distance 10 5))
     (test-error (point-abs-distance p1 5)))))
