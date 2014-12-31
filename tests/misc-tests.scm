@@ -49,4 +49,23 @@
   (test (list 8 15)
         (zip-apply *
                    (list 4 3) (list 2 5)))
-  (test-error (zip-apply (lambda (x y) (* x y)) 10 20))))
+  (test-error (zip-apply (lambda (x y) (* x y)) 10 20)))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "%advance-current"
+  (test '() (%advance-current '() (list 1 2 3) #t))
+  (test '() (%advance-current '() (list 1 2 3) #f))
+  (let* ((l1 (list 10 20 30 40))
+         (l2 (list 'a 'b))
+         (l3 (list 100 200 300))
+         (l4 (list l1 l2 l3))
+         (l4-1 (list (cdr l1) l2 l3))
+         (l4-2 (list (list 40) (cdr l2) l3))
+         (l4-3 (list l1 l2 (cdr l3))))
+    (test l4 (%advance-current l4 l4 #f))
+    (test l4-1 (%advance-current l4 l4 #t))
+    (test l4-3 (%advance-current l4-2 l4 #t))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "list-combinations"
+  (test #t (list-combinations (list 1 2 3)))))
