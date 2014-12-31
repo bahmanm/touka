@@ -42,14 +42,14 @@
     (test-error (nth '() 0))))
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  (test-group
-  "zip-apply"
+  "zip-map"
   (test (list 1 1)
-        (zip-apply -
+        (zip-map -
                    (list 10 5) (list 9 4)))
   (test (list 8 15)
-        (zip-apply *
+        (zip-map *
                    (list 4 3) (list 2 5)))
-  (test-error (zip-apply (lambda (x y) (* x y)) 10 20)))
+  (test-error (zip-map (lambda (x y) (* x y)) 10 20)))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  (test-group
   "%advance-current"

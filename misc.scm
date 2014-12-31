@@ -13,7 +13,7 @@
 ; limitations under the License.
 
 (module misc
-  (nth-set nth zip-apply %advance-current)
+  (nth-set nth zip-map %advance-current list-combinations)
 
   (import scheme chicken)
   (use srfi-1)
@@ -29,7 +29,7 @@
 
   ;; Applies a given procedure to the elements of the given lists grouped by
   ;; index (zipped). The given procedure should expect two arguments.
-  (define (zip-apply f lis1 lis2)
+  (define (zip-map f lis1 lis2)
     (assert (and (list? lis1) (list? lis2)))
     (map (lambda (l) (f (first l) (second l))) (zip lis1 lis2)))
 

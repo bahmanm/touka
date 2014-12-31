@@ -43,18 +43,18 @@
   ;; of the given points is not equal, uses the smaller dimension.
   (define (point-distance point1 point2)
     (assert (and (point? point1) (point? point2)))
-    (point-create (zip-apply -
+    (point-create (zip-map -
                              (point-coords point1) (point-coords point2))))
 
   ;; Calculates the absolute distance between the given points.
   (define (point-abs-distance point1 point2)
     (assert (and (point? point1) (point? point2)))
-    (point-create (zip-apply (lambda (x y) (abs (- x y)))
+    (point-create (zip-map (lambda (x y) (abs (- x y)))
                              (point-coords point1) (point-coords point2))))
 
   ;; Creates a new point from the given point with the coordinates moved 
   ;; by the distance.
   (define (point-move point distance)
     (assert (and (point? point) (point? distance)))
-    (point-create (zip-apply +
+    (point-create (zip-map +
                              (point-coords point) (point-coords distance)))))
