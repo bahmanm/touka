@@ -67,5 +67,11 @@
     (test l4-3 (%advance-current l4-2 l4 #t))))
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  (test-group
+  "cars"
+  (test '() (cars '()))
+  (test '(1 a 100) (cars '((1) (a b c) (100 200))))
+  (test '(1 100) (cars '((1) (100)))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
   "list-combinations"
   (test #t (list-combinations (list 1 2 3)))))

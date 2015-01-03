@@ -13,7 +13,7 @@
 ; limitations under the License.
 
 (module misc
-  (nth-set nth zip-map %advance-current list-combinations)
+  (nth-set nth zip-map %advance-current list-combinations cars)
 
   (import scheme chicken)
   (use srfi-1)
@@ -32,6 +32,10 @@
   (define (zip-map f lis1 lis2)
     (assert (and (list? lis1) (list? lis2)))
     (map (lambda (l) (f (first l) (second l))) (zip lis1 lis2)))
+  
+  ;; Collects the CAR of each list in the given list of lists!
+  (define (cars list-of-lists)
+    (map car list-of-lists))
 
   ;; (define (list-combinations . lists)
   ;;   (assert (fold (lambda (l acc) (and acc (list? l))) #t lists))
@@ -46,9 +50,7 @@
   ;;        (if (has-ended? current) '()
   ;;            (cons (car current) (lc (cdr current)))))))))
   (define (list-combinations . lists)
-    (assert (fold (lambda (l acc) (and acc (list? l))) #t lists))
     #f)
-
 
   ;; Advances the current list of lists one element ahead. As meaningless as
   ;; it sounds, it is at the heart of the list combinations.
