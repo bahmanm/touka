@@ -41,6 +41,9 @@
   (define (cdrs list-of-lists)
     (map cdr list-of-lists))
 
+  ;; Calculates the combinations of the given lists.
+  ;; For example, calling (list-combinations '(a b) '(1) '(X Y Z)) produces 
+  ;; (a 1 X), (a 1 Y), (a 1 Z), (b 1 X), (b 1 Y), (b 1 Z)
   (define (list-combinations . lists)
     (let lc ((current lists) (first-element? #t))
       (lazy-seq
