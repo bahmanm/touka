@@ -2,6 +2,6 @@
  (author "Bahman Movaqar <Bahman@BahmanM.com>")
  (category data)
  (license "Apache License, version 2.0")
- (depends "srfi-99")
+ (depends "srfi-99" "lazy-seq")
  (test-depends "test")
  (foreign-depends))

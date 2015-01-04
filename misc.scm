@@ -13,10 +13,10 @@
 ; limitations under the License.
 
 (module misc
-  (nth-set nth zip-map %advance-current list-combinations cars)
+  (nth-set nth zip-map %advance-current list-combinations cars cdrs)
 
   (import scheme chicken)
-  (use srfi-1)
+  (use srfi-1 lazy-seq)
 
   ;; Returns a new list which is a copy of the given list with its nth element
   ;; having the given value.
@@ -37,20 +37,18 @@
   (define (cars list-of-lists)
     (map car list-of-lists))
 
-  ;; (define (list-combinations . lists)
-  ;;   (assert (fold (lambda (l acc) (and acc (list? l))) #t lists))
-  ;;   (let ((has-ended? (lambda (curr) (every null? curr)))
-  ;;         (advance-current (lambda (current lists)
-  ;;                            (let f ((c current)
-  ;;                                    (advance? #t))
-  ;;                              (if advance?
-  ;;                                  (cons )))))
-  ;;     (let lc ((current lists))
-  ;;       (lazy-seq
-  ;;        (if (has-ended? current) '()
-  ;;            (cons (car current) (lc (cdr current)))))))))
+  ;; Collects the CDR of each list in the given list of lists!
+  (define (cdrs list-of-lists)
+    (map cdr list-of-lists))
+
   (define (list-combinations . lists)
-    #f)
+    (let lc ((current lists) (first-element? #t))
+      (lazy-seq
+       (if first-element? (cons (cars current) (lc current #f))
+           (let ((advanced (%advance-current current lists #t)))
+             (if (equal? advanced lists) '()
+                 (cons (cars advanced)
+                       (lc advanced #f))))))))
 
   ;; Advances the current list of lists one element ahead. As meaningless as
   ;; it sounds, it is at the heart of the list combinations.

@@ -61,10 +61,15 @@
          (l4 (list l1 l2 l3))
          (l4-1 (list (cdr l1) l2 l3))
          (l4-2 (list (list 40) (cdr l2) l3))
-         (l4-3 (list l1 l2 (cdr l3))))
+         (l4-3 (list l1 l2 (cdr l3)))
+         (l5 (list 'a))
+         (l6 (list 'A))
+         (l7 (list l5 l6)))
     (test l4 (%advance-current l4 l4 #f))
     (test l4-1 (%advance-current l4 l4 #t))
-    (test l4-3 (%advance-current l4-2 l4 #t))))
+    (test l4-3 (%advance-current l4-2 l4 #t))
+    (test "return the original lists if current is fully exhausted"
+          l7 (%advance-current l7 l7 #t))))
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  (test-group
   "cars"
@@ -73,5 +78,22 @@
   (test '(1 100) (cars '((1) (100)))))
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  (test-group
+  "cdrs"
+  (test '() (cdrs '())))
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
   "list-combinations"
-  (test #t (list-combinations (list 1 2 3)))))
+  (let ((lc (list-combinations (list 1) (list 'a 'b))))
+    (test #t (lazy-seq? lc))
+    (test #f (lazy-null? lc))
+    (test 2 (lazy-length lc))
+    (test (list 1 'a) (lazy-head lc))
+    (test (list 1 'b) (lazy-head (lazy-tail lc)))
+    (test #t (lazy-null? (lazy-tail (lazy-tail lc))))
+    (test (list '(1 a) '(1 b)) (lazy-seq->list lc)))
+  (let ((lc (list-combinations (list 1 2 3)
+                               (list 'a 'b 'c 'd)
+                               (list 100 200 300))))
+    (test #t (lazy-seq? lc))
+    (test #f (lazy-null? lc))
+    (test 36 (lazy-length lc)))))
