@@ -85,5 +85,33 @@
         (p5 (point-create (list 9))))
     (test p3 (point-move p1 p2))
     (test p5 (point-move p1 p4))
-    (test-error (point-abs-distance 10 5))
-    (test-error (point-abs-distance p1 5)))))
+    (test-error (point-move 10 5))
+    (test-error (point-move p1 5))))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "point>?"
+  (let ((p1 (point-create (list 10 20)))
+        (p2 (point-create (list 10 21)))
+        (p3 (point-create (list 18 45 76 -1)))
+        (p4 (point-create (list 18 45 76 -2)))
+        (p5 (point-create (list 9)))
+        (p6 (point-create (list 8))))
+    (test-assert (point>? p2 p1))
+    (test-assert (point>? p3 p4))
+    (test-assert (point>? p5 p6))
+    (test-error (point>? 10 5))
+    (test-error (point>? p1 5))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "point<?"
+  (let ((p1 (point-create (list 10 20)))
+        (p2 (point-create (list 10 21)))
+        (p3 (point-create (list 18 45 76 -1)))
+        (p4 (point-create (list 18 45 76 -2)))
+        (p5 (point-create (list 9)))
+        (p6 (point-create (list 8))))
+    (test-assert (point<? p1 p2))
+    (test-assert (point<? p4 p3))
+    (test-assert (point<? p6 p5))
+    (test-error (point<? 10 5))
+    (test-error (point<? p1 5)))))

@@ -15,7 +15,7 @@
 ;; Represents a point in an n-dimensional metric space.
 (module point
   (point-create point? point-coords point-coord point-coord-set point-distance
-   point-abs-distance point-move)
+   point-abs-distance point-move point>? point<?)
   (import scheme chicken)
   (use srfi-1 srfi-99 misc)
   
@@ -57,4 +57,15 @@
   (define (point-move point distance)
     (assert (and (point? point) (point? distance)))
     (point-create (zip-map +
-                           (point-coords point) (point-coords distance)))))
+                           (point-coords point) (point-coords distance))))
+
+  ;; Compares if p1 is greater than p2. Returns #t on the first p1 coordinate
+  ;; that is greater than that of p2.
+  (define (point>? p1 p2)
+    (assert (and (point? p1) (point? p2)))
+    (any (lambda (x) (> (first x) (second x)))
+         (zip (point-coords p1) (point-coords p2))))
+
+  ;; Compares if p1 is less than p2.
+  (define (point<? p1 p2)
+    (point>? p2 p1)))
