@@ -1,4 +1,4 @@
-; Copyright 2014 Bahman Movaqar
+; Copyright 2014, 2015 Bahman Movaqar
 ; 
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -35,4 +35,21 @@
   (test (point-create (list 11 1))
         (region-extent (region-create (point-create (list 10 20))
                                       (point-create (list 11 1)))))
-  (test-error (region-extent 10))))
+  (test-error (region-extent 10)))
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "region-corners"
+  (let* ((p1 (point-create (list 1 2)))
+         (p2 (point-create (list 10 20)))
+         (p1-1 (point-create (list 1 2)))
+         (p1-2 (point-create (list 1 22)))
+         (p1-3 (point-create (list 11 2)))
+         (p1-4 (point-create (list 11 22)))
+         (r1 (region-create p1 p2)))
+    (test-error (region-corners p1))
+    (test #f (null? (region-corners r1)))
+    (test 4 (length (region-corners r1)))
+    (test #t (any (lambda (x) (equal? x p1-1)) (region-corners r1)))
+    (test #t (member p1-2 (region-corners r1)))
+    (test #t (member p1-3 (region-corners r1)))
+    (test #t (member p1-4 (region-corners r1))))))

@@ -1,4 +1,4 @@
-; Copyright 2014 Bahman Movaqar
+; Copyright 2014, 2015 Bahman Movaqar
 ; 
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 ;; coordinates of the region while the extent denotes how far in each dimension
 ;; the region extends starting from the corner.
 (module region
-  (region-create region? region-corner region-extent)
+  (region-create region? region-corner region-extent region-corners)
   (import scheme chicken)
-  (use srfi-1 srfi-99 point)
+  (use srfi-1 srfi-99 point misc lazy-seq)
 
   (define region-rtd (make-rtd #:region #(#:corner #:extent)))
   (define region-make (rtd-constructor region-rtd))
@@ -33,4 +33,16 @@
   ;;     corner.
   (define (region-create corner extent)
     (assert (and (point? corner) (point? extent)))
-    (region-make corner extent)))
+    (region-make corner extent))
+
+  ;; Computes all corners of the region as a list of points.
+  (define (region-corners region-rtd)
+    (assert (region? region-rtd))
+    (let* ((low-corner-point (region-corner region-rtd))
+           (extent (region-extent region-rtd))
+           (high-corner-point (point-move low-corner-point extent))
+           (low-corner (point-coords low-corner-point))
+           (high-corner (point-coords high-corner-point))
+           (combinations (lazy-seq->list (list-combinations
+                                          low-corner high-corner))))
+      (map point-create combinations))))

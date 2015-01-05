@@ -1,4 +1,4 @@
-; Copyright 2014 Bahman Movaqar
+; Copyright 2014, 2015 Bahman Movaqar
 ; 
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -57,4 +57,4 @@
   (define (point-move point distance)
     (assert (and (point? point) (point? distance)))
     (point-create (zip-map +
-                             (point-coords point) (point-coords distance)))))
+                           (point-coords point) (point-coords distance)))))
