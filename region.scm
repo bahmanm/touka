@@ -17,7 +17,8 @@
 ;; coordinates of the region while the extent denotes how far in each dimension
 ;; the region extends starting from the corner.
 (module region
-  (region-create region? region-corner region-extent region-corners)
+  (region-create region? region-corner region-extent region-corners
+   region-overlaps?)
   (import scheme chicken)
   (use srfi-1 srfi-99 point misc lazy-seq)
 
@@ -46,4 +47,20 @@
            (combinations (lazy-seq->list
                           (apply list-combinations
                                  (zip low-corner high-corner)))))
-      (map point-create combinations))))
+      (map point-create combinations)))
+
+  ;; Checks if the two given regions overlap.
+  (define (region-overlaps? region1 region2)
+    (assert (and (region? region1) (region? region2)))
+    (let* ((min1 (region-corner region1))
+           (min2 (region-corner region2))
+           (max1 (point-move min1 (region-extent region1)))
+           (max2 (point-move min2 (region-extent region2))))
+      (every (lambda (l)
+               (let ((min1 (first l)) (min2 (second l))
+                     (max1 (third l)) (max2 (fourth l)))
+                 (or (and (> min1 min2) (> max2 min1))
+                     (and (< min1 min2) (> max1 min2))
+                     (equal? min1 min2))))
+             (zip (point-coords min1) (point-coords min2)
+                  (point-coords max1) (point-coords max2))))))
