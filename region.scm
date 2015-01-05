@@ -43,6 +43,7 @@
            (high-corner-point (point-move low-corner-point extent))
            (low-corner (point-coords low-corner-point))
            (high-corner (point-coords high-corner-point))
-           (combinations (lazy-seq->list (list-combinations
-                                          low-corner high-corner))))
+           (combinations (lazy-seq->list
+                          (apply list-combinations
+                                 (zip low-corner high-corner)))))
       (map point-create combinations))))
