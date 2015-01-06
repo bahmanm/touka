@@ -54,7 +54,7 @@
     (test-assert (member p1-3 (region-corners r1)))
     (test-assert (member p1-4 (region-corners r1)))
     (test #f (member p2 (region-corners r1)))))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  (test-group
   "region-overlaps?"
   (let* ((p1 (point-create (list 4 4)))
@@ -73,4 +73,26 @@
     (test #f (region-overlaps? r (region-create p5 p9)))
     (test-assert (region-overlaps? r (region-create p6 p7)))
     (test #f (region-overlaps? r (region-create p6 p5)))
-    (test #f (region-overlaps? r (region-create p8 p5))))))
+    (test #f (region-overlaps? r (region-create p8 p5)))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "region-overlap"
+  (let* ((p1 (point-create (list 4 4)))
+         (p2 (point-create (list 3 3)))
+         (p3 (point-create (list 5 4)))
+         (p4 (point-create (list 1 3)))
+         (p5 (point-create (list 2 2)))
+         (p6 (point-create (list 6 2)))
+         (p7 (point-create (list 2 3)))
+         (p8 (point-create (list 7 7)))
+         (p9 (point-create (list 1 1)))
+         (p10 (point-create (list 6 4)))
+         (r (region-create p1 p2)))
+    (test r (region-overlap r r))
+    (test (region-create p3 p4)
+          (region-overlap r (region-create p3 p4)))
+    (test (region-create p1 p9)
+          (region-overlap r (region-create p2 p5)))
+    (test (region-create p10 p9)
+          (region-overlap r (region-create p6 p7)))
+    (test-error (region-overlap r (region-create p9 p9))))))
