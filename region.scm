@@ -18,7 +18,7 @@
 ;; the region extends starting from the corner.
 (module region
   (region-create region? region-corner region-extent region-corners
-   region-overlaps? region-overlap)
+   region-overlaps? region-overlap region-move)
   (import scheme chicken)
   (use srfi-1 srfi-99 point misc lazy-seq)
 
@@ -81,4 +81,12 @@
                                                   (zip (point-coords max1)
                                                        (point-coords max2)))))
            (result-extent (point-distance result-high-corner result-corner)))
-      (region-create result-corner result-extent))))
+      (region-create result-corner result-extent)))
+
+  ;; Moves the region by a given distance (as point), keeping the 'extent'
+  ;; intact and only moving the corner. It does NOT mutate the given region
+  ;; and instead returns a new one.
+  (define (region-move region distance)
+    (assert (and (region? region) (point? distance)))
+    (region-create (point-move (region-corner region) distance)
+                   (region-extent region))))

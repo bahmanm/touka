@@ -95,4 +95,18 @@
           (region-overlap r (region-create p2 p5)))
     (test (region-create p10 p9)
           (region-overlap r (region-create p6 p7)))
-    (test-error (region-overlap r (region-create p9 p9))))))
+    (test-error (region-overlap r (region-create p9 p9)))))
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (test-group
+  "region-move"
+  (let* ((p1 (point-create (list 1 1)))
+         (p2 (point-create (list 2 2)))
+         (p3 (point-create (list -1 0)))
+         (p4 (point-create (list 0 1)))
+         (r (region-create p1 p2)))
+    (test-error (region-move r r))
+    (test-error (region-move p1 r))
+    (test (region-extent r)
+          (region-extent (region-move r p3)))
+    (test p4
+          (region-corner (region-move r p3))))))
